@@ -75,8 +75,6 @@ public class TranslationBean {
         String uk_phonetic = basic.ukPhonetic;
         if (us_phonetic == null && uk_phonetic == null) {
 
-//            String code = new String(basic.phonetic,"unicode");
-
             phonetic = "发音：[" + basic.phonetic + "]；";
         } else {
             if (us_phonetic != null) {

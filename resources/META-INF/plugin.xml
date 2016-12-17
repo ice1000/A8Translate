@@ -6,16 +6,14 @@
 
   <description><![CDATA[
       一款功能强大的翻译插件。<br>
-      GitHub：<br>
-      简书：<br>
-      <em>most HTML tags may be used</em>
+      GitHub：https://github.com/PingerOne/A8Translate<br>
+      简书：http://www.jianshu.com/p/bf54eddfba6e<br>
     ]]></description>
 
   <change-notes><![CDATA[
       Version 1.2 ：<br>
       1. 完善了翻译结果的显示格式。<br>
       2. 完善了程序的健壮性。<br>
-      <em>most HTML tags may be used</em>
     ]]>
   </change-notes>
 
