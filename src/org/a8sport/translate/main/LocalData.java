@@ -14,14 +14,17 @@ import java.util.Properties;
  *
  * @author ice1000
  */
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class LocalData {
     private static final Properties p;
     private static final File f;
+    public static final String PREFIX_NAME = "A8Translate";
 
     static {
         p = new Properties();
-        f = new File("/a8temp/local.properties");
+        f = new File("./a8temp.properties");
         try {
+            if (!f.exists()) f.createNewFile();
             p.load(new FileReader(f));
         } catch (IOException ignored) {
         }
@@ -29,10 +32,18 @@ public class LocalData {
 
     public static void store(@NonNls String key, @NonNls String value) {
         p.put(key, value);
+        save();
+    }
+
+    public static void clear() {
+        p.clear();
+        save();
+    }
+
+    private static void save() {
         try {
             p.store(new FileWriter(f), "Created by a8translate");
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 

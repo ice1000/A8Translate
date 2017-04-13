@@ -19,13 +19,13 @@ import java.net.URL;
  */
 public class HttpUtils {
 
-    private static final String BASE_URL = "http://fanyi.youdao.com/openapi.do?keyfrom=Skykai521&key=977124034&type=data&doctype=json&version=1.1&q=";
+    private static final String BASE_URL =
+            "http://fanyi.youdao.com/openapi.do?keyfrom=Skykai521&key=977124034&type=data&doctype=json&version=1.1&q=";
 
     /**
      * 请求网络数据
      */
     public static void requestNetData(String queryWord, TranslateCallBack callBack) {
-        // TODO 读取本地缓存
         String local = LocalData.read(queryWord);
         if (local != null) {
             callBack.onSuccess(new Gson().fromJson(local, callBack.mType));
@@ -51,11 +51,13 @@ public class HttpUtils {
                     LocalData.store(queryWord, content);
                 } else callBack.onFailure(TranslationBean.EMPTY);
             } else {
-                callBack.onFailure(conn.getResponseMessage());
+                callBack.onFailure("错误码："
+                        + conn.getResponseCode()
+                        + "\n错误信息：\n"
+                        + conn.getResponseMessage());
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            callBack.onFailure(e.getMessage());
+            callBack.onFailure("无法访问:\n" + e.getMessage());
         }
     }
 }

@@ -9,6 +9,7 @@ import javax.swing.*;
  *
  * @author ice1000
  */
+@SuppressWarnings("WeakerAccess")
 public class IconHolder {
-    public static final Icon A8_ICON = IconLoader.getIcon("/icon/a8.png");
+    public static final Icon A8_ICON = IconLoader.getIcon("/icons/a8.png");
 }

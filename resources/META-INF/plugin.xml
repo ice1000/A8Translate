@@ -1,7 +1,7 @@
-<idea-plugin version="2">
+<idea-plugin>
   <id>org.a8sport.translate.unique.a8translate</id>
   <name>A8Translate</name>
-  <version>1.3</version>
+  <version>1.4</version>
   <vendor email="wanpingping@yuntutv.net" url="http://www.a8tiyu.com/">A8体育直播</vendor>
 
   <description><![CDATA[
@@ -11,25 +11,21 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      1. 完善了翻译结果的显示格式。<br>
-      2. 完善了程序的健壮性。<br>
+      1. 完善了翻译结果的本地保存。<br>
     ]]>
   </change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
   <idea-version since-build="145.0"/>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-   <!--uncomment to enable plugin in all products-->
-  <depends>com.intellij.modules.lang</depends>   <!--将产品发布到仓库，多个idea都可以看见-->
+  <depends>com.intellij.modules.lang</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
+    <!--<applicationService-->
+            <!--serviceInterface="org.a8sport.translate.bean.LocalDataBean"-->
+            <!--serviceImplementation="org.a8sport.translate.bean.LocalDataBean"/>-->
   </extensions>
 
   <actions>
-    <!-- Add your actions here -->
     <action id="A8Translate.TranslateAction" class="org.a8sport.translate.main.TranslateAction" text="A8Translate"
             description="English translation into Chinese">
       <add-to-group group-id="EditMenu" anchor="first"/>
