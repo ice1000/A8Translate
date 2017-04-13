@@ -2,6 +2,7 @@ package org.a8sport.translate.net;
 
 import com.google.gson.Gson;
 import org.a8sport.translate.bean.TranslationBean;
+import org.a8sport.translate.main.LocalData;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
@@ -25,13 +26,18 @@ public class HttpUtils {
      */
     public static void requestNetData(String queryWord, TranslateCallBack callBack) {
         // TODO 读取本地缓存
+        String local = LocalData.read(queryWord);
+        if (local != null) {
+            callBack.onSuccess(new Gson().fromJson(local, callBack.mType));
+            return;
+        }
 
         try {
             URL url = new URL(BASE_URL + queryWord);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            conn.setConnectTimeout(5000);
-            conn.setReadTimeout(5000);
+            conn.setConnectTimeout(3000);
+            conn.setReadTimeout(3000);
             conn.setRequestMethod(conn.getRequestMethod());
 
             // 连接成功
@@ -40,8 +46,10 @@ public class HttpUtils {
 
                 // 获取到Json字符串
                 String content = StreamUtils.getStringFromStream(ins);
-                if (StringUtils.isNotEmpty(content)) callBack.onSuccess(new Gson().fromJson(content, callBack.mType));
-                else callBack.onFailure(TranslationBean.EMPTY);
+                if (StringUtils.isNotEmpty(content)) {
+                    callBack.onSuccess(new Gson().fromJson(content, callBack.mType));
+                    LocalData.store(queryWord, content);
+                } else callBack.onFailure(TranslationBean.EMPTY);
             } else {
                 callBack.onFailure(conn.getResponseMessage());
             }
