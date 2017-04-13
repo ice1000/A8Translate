@@ -1,5 +1,9 @@
 package org.a8sport.translate.bean;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 
 /**
@@ -8,14 +12,16 @@ import java.util.List;
  */
 public class TranslationBean {
 
-    /** 返回错误码的状态，有道返回 */
+    /**
+     * 返回错误码的状态，有道返回
+     */
     private final static int SUCCESS = 0;  // 成功
     private final static int QUERY_STRING_TOO_LONG = 20;  // 要翻译的文本过长
     private final static int CAN_NOT_TRANSLATE = 30;  // 无法进行有效的翻译
     private final static int INVALID_LANGUAGE = 40;   // 不支持的语言类型
     private final static int INVALID_KEY = 50;  // 无效的key
     private final static int NO_RESULT = 60;   // 无词典结果
-    public final static  String EMPTY = "返回数据为空";
+    public final static String EMPTY = "返回数据为空";
 
     /**
      * translation : ["解决"]
@@ -44,7 +50,11 @@ public class TranslationBean {
     }
 
 
-    /** 取错误信息 */
+    /**
+     * 取错误信息
+     */
+    @NotNull
+    @Contract(pure = true)
     private String getErrorMessage() {
         switch (errorCode) {
             case SUCCESS:
@@ -64,105 +74,109 @@ public class TranslationBean {
     }
 
 
-    /** 获取不同语言的翻译内容 */
+    /**
+     * 获取不同语言的翻译内容
+     */
+    @Nullable
     private String getPhonetic() {
-        if (basic == null) {
-            return null;
-        }
+        if (basic == null) return null;
 
         String phonetic = null;
-        String us_phonetic = basic.usPhonetic;
-        String uk_phonetic = basic.ukPhonetic;
-        if (us_phonetic == null && uk_phonetic == null) {
+        String usPhonetic = basic.usPhonetic;
+        String ukPhonetic = basic.ukPhonetic;
+        if (usPhonetic == null && ukPhonetic == null) {
 
             phonetic = "发音：[" + basic.phonetic + "]；";
         } else {
-            if (us_phonetic != null) {
-                phonetic = "美式：[" + us_phonetic + "]；";
-            }
-            if (uk_phonetic != null) {
-                if (phonetic == null) {
-                    phonetic = "";
-                }
-                phonetic = phonetic + "英式：[" + uk_phonetic + "]；";
+            if (usPhonetic != null) phonetic = "美式：[" + usPhonetic + "]；";
+            if (ukPhonetic != null) {
+                if (phonetic == null) phonetic = "";
+                phonetic = phonetic + "英式：[" + ukPhonetic + "]；";
             }
         }
         System.out.println(phonetic);
         return phonetic;
     }
 
-    /** 获取翻译 */
+    /**
+     * 获取翻译
+     */
+    @Nullable
     private String getExplains() {
         if (basic == null) {
             return null;
         }
-        String result = null;
+        StringBuilder result = null;
         List<String> explains = basic.explains;
         if (explains.size() > 0) {
-            result = "";
+            result = new StringBuilder();
+            for (String explain : explains) {
+                result.append(explain).append("\n");
+            }
         }
-        for (String explain : explains) {
-            result += explain + "\n";
-        }
-        return result;
+        return result != null ? result.toString() : null;
     }
 
-    /** 获取直接的翻译结果 */
+    /**
+     * 获取直接的翻译结果
+     */
+    @Nullable
     private String getTranslationResult() {
         if (translation == null) {
             return null;
         }
-        String result = null;
+        StringBuilder result = null;
         if (translation.size() > 0) {
-            result = "";
-        }
-
-        for (int i = 0; i < translation.size(); i++) {
-            String keyword = translation.get(i);
-            if(i < translation.size() -1 ){
-                result += (keyword + "，");
-            }else{
-                result += (keyword + "；");
+            result = new StringBuilder();
+            for (int i = 0; i < translation.size(); i++) {
+                String keyword = translation.get(i);
+                if (i < translation.size() - 1) result.append(keyword).append("，");
+                else result.append(keyword).append("；");
             }
         }
-        return result;
+        return result != null ? result.toString() : null;
     }
 
-    /** 获取网络翻译结果 */
+    /**
+     * 获取网络翻译结果
+     */
+    @Nullable
     private String getWebResult() {
         if (web == null) {
             return null;
         }
-        String result = null;
+        StringBuilder result = null;
         if (web.size() > 0) {
-            result = "";
-        }
+            result = new StringBuilder();
+            for (WebBean webBean : web) {
+                String key = webBean.key;
+                result.append(key).append("：");
 
-        for (WebBean webBean : web) {
-            String key = webBean.key;
-            result += (key + "：");
-
-            List<String> value = webBean.value;
-            for (int i = 0; i < value.size(); i++) {
-                String keyword = value.get(i);
-                if(i < value.size() - 1){
-                    result += (keyword + "，");
-                }else{
-                    result += keyword;
+                List<String> value = webBean.value;
+                for (int i = 0; i < value.size(); i++) {
+                    String keyword = value.get(i);
+                    if (i < value.size() - 1) {
+                        result.append(keyword).append("，");
+                    } else {
+                        result.append(keyword);
+                    }
                 }
-            }
 
-            result += "\n";
+                result.append("\n");
+            }
         }
 
-        return result;
+
+        return result != null ? result.toString() : null;
     }
 
     private boolean isSentence() {
         return query.trim().contains(" ");
     }
 
-    /** 结果 */
+    /**
+     * 结果
+     */
     @Override
     public String toString() {
         String string = null;
