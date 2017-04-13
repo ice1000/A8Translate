@@ -18,12 +18,15 @@ import java.awt.*;
 
 /**
  * Created by Pinger on 2016/12/10.
- *  翻译插件动作
+ * 翻译插件动作
+ * <p>
+ * 需要完成的逻辑有三段：
+ * 第一：获取选中的单词
+ * 第二：联网查询选中的单词意思，返回json，然后解析
+ * 第三：弹出PopupWindow，显示结果
  *
- *  需要完成的逻辑有三段：
- *  第一：获取选中的单词
- *  第二：联网查询选中的单词意思，返回json，然后解析
- *  第三：弹出PopupWindow，显示结果
+ * @author ice1000
+ * @author Pinger
  */
 
 public class TranslateAction extends AnAction {
@@ -39,7 +42,9 @@ public class TranslateAction extends AnAction {
         }
     }
 
-    /** 执行翻译 */
+    /**
+     * 执行翻译
+     */
     private void performTranslation(AnActionEvent e) {
 
         /**
@@ -83,7 +88,7 @@ public class TranslateAction extends AnAction {
     /**
      * 第三步 --> 弹出对话框
      *
-     * @param result
+     * @param result string result
      */
     private void showPopupWindow(final String result) {
         ApplicationManager.getApplication().invokeLater(() -> {
@@ -96,7 +101,9 @@ public class TranslateAction extends AnAction {
     }
 
 
-    /** 屏蔽多次选中 */
+    /**
+     * 屏蔽多次选中
+     */
     public boolean isFastClick(long timeMillis) {
         long time = System.currentTimeMillis();
         long timeD = time - latestClickTime;
