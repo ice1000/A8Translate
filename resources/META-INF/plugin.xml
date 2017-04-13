@@ -1,12 +1,13 @@
 <idea-plugin>
-  <id>org.a8sport.translate.unique.a8translate</id>
+  <id>org.ice1000.a8translate</id>
   <name>A8Translate</name>
-  <version>1.4</version>
-  <vendor email="wanpingping@yuntutv.net" url="http://www.a8tiyu.com/">A8体育直播</vendor>
+  <version>1.5</version>
+  <vendor email="ice1000@kotliner.cn" url="http://ice1000.org/">千里冰封的博客</vendor>
 
   <description><![CDATA[
       一款功能强大的翻译插件。<br>
       GitHub：https://github.com/PingerOne/A8Translate<br>
+      GitHub2：https://github.com/ice1000/A8Translate<br>
       简书：http://www.jianshu.com/p/bf54eddfba6e<br>
 
       作者： wanpingping, ice1000
