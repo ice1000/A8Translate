@@ -9,6 +9,9 @@ import java.util.List;
 /**
  * Created by Pinger on 2016/12/10.
  * 翻译结果javabean
+ *
+ * @author ice1000
+ * @author Pinger
  */
 @SuppressWarnings("WeakerAccess")
 public class TranslationBean {
@@ -150,9 +153,7 @@ public class TranslationBean {
         List<String> explains = basic.explains;
         if (explains.size() > 0) {
             result = new StringBuilder();
-            for (String explain : explains) {
-                result.append(explain).append("\n");
-            }
+            for (String explain : explains) result.append(explain).append("\n");
         }
         return result != null ? result.toString() : null;
     }

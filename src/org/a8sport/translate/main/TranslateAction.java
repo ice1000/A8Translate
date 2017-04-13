@@ -29,6 +29,7 @@ import java.awt.*;
  * @author Pinger
  */
 
+@SuppressWarnings("WeakerAccess")
 public class TranslateAction extends AnAction {
 
     private Editor mEditor;
@@ -47,7 +48,7 @@ public class TranslateAction extends AnAction {
      */
     private void performTranslation(AnActionEvent e) {
 
-        /**
+        /*
          * 第一步 --> 选中单词
          */
         // 获取动作编辑器
@@ -61,7 +62,7 @@ public class TranslateAction extends AnAction {
         String selectedText = model.getSelectedText();
         if (TextUtils.isEmpty(selectedText)) return;
 
-        /**
+        /*
          * 第二步 ---> API查询
          */
         HttpUtils.requestNetData(selectedText, new TranslateCallBack<TranslationBean>() {
@@ -92,11 +93,23 @@ public class TranslateAction extends AnAction {
      */
     private void showPopupWindow(final String result) {
         ApplicationManager.getApplication().invokeLater(() -> {
-            JBPopupFactory factory = JBPopupFactory.getInstance();
-            factory.createHtmlTextBalloonBuilder(result, null, new JBColor(new Color(186, 238, 186), new Color(73, 117, 73)), null)
+            JBPopupFactory
+                    .getInstance()
+                    .createHtmlTextBalloonBuilder(
+                            result,
+                            IconHolder.A8_ICON,
+                            new JBColor(
+                                    new Color(186, 238, 186),
+                                    new Color(73, 117, 73)
+                            ),
+                            null
+                    )
                     .setFadeoutTime(5000)
                     .createBalloon()
-                    .show(factory.guessBestPopupLocation(mEditor), Balloon.Position.below);
+                    .show(JBPopupFactory
+                                    .getInstance()
+                                    .guessBestPopupLocation(mEditor),
+                            Balloon.Position.below);
         });
     }
 
@@ -104,12 +117,10 @@ public class TranslateAction extends AnAction {
     /**
      * 屏蔽多次选中
      */
-    public boolean isFastClick(long timeMillis) {
+    public boolean isFastClick(@SuppressWarnings("SameParameterValue") long timeMillis) {
         long time = System.currentTimeMillis();
         long timeD = time - latestClickTime;
-        if (0 < timeD && timeD < timeMillis) {
-            return true;
-        }
+        if (0 < timeD && timeD < timeMillis) return true;
         latestClickTime = time;
         return false;
     }
