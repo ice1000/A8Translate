@@ -8,10 +8,13 @@
       一款功能强大的翻译插件。<br>
       GitHub：https://github.com/PingerOne/A8Translate<br>
       简书：http://www.jianshu.com/p/bf54eddfba6e<br>
+
+      作者： wanpingping, ice1000
     ]]></description>
 
   <change-notes><![CDATA[
-      1. 完善了翻译结果的本地保存。<br>
+      1. 完善了翻译结果的本地保存。<br/>
+      2. 添加了图标。<br/>
     ]]>
   </change-notes>
 
@@ -21,8 +24,8 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!--<applicationService-->
-            <!--serviceInterface="org.a8sport.translate.bean.LocalDataBean"-->
-            <!--serviceImplementation="org.a8sport.translate.bean.LocalDataBean"/>-->
+    <!--serviceInterface="org.a8sport.translate.bean.LocalDataBean"-->
+    <!--serviceImplementation="org.a8sport.translate.bean.LocalDataBean"/>-->
   </extensions>
 
   <actions>

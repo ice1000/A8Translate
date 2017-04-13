@@ -1,5 +1,6 @@
 package org.a8sport.translate.main;
 
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,7 +23,7 @@ public class LocalData {
 
     static {
         p = new Properties();
-        f = new File("./a8temp.properties");
+        f = new File(System.getProperty("user.home") + "/a8temp.properties");
         try {
             if (!f.exists()) f.createNewFile();
             p.load(new FileReader(f));
@@ -31,7 +32,7 @@ public class LocalData {
     }
 
     public static void store(@NonNls String key, @NonNls String value) {
-        p.put(key, value);
+        p.put(StringUtils.uncapitalize(key), value);
         save();
     }
 
@@ -49,6 +50,6 @@ public class LocalData {
 
     @Nullable
     public static String read(@NonNls String key) {
-        return p.getProperty(key);
+        return p.getProperty(StringUtils.uncapitalize(key));
     }
 }
