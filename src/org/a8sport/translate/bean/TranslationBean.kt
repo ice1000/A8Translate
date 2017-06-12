@@ -1,7 +1,5 @@
 package org.a8sport.translate.bean
 
-import org.jetbrains.annotations.Contract
-
 /**
  * Created by Pinger on 2016/12/10.
  * 翻译结果javabean
@@ -82,18 +80,17 @@ class TranslationBean {
 	/**
 	 * 取错误信息
 	 */
-	private val errorMessage: String @Contract(pure = true) get() {
+	private val errorMessage: String by lazy {
 		when (errorCode) {
-			SUCCESS -> return "成功"
-			QUERY_STRING_TOO_LONG -> return "要翻译的文本过长"
-			CAN_NOT_TRANSLATE -> return "无法进行有效的翻译"
-			INVALID_LANGUAGE -> return "不支持的语言类型"
-			INVALID_KEY -> return "无效的key"
-			NO_RESULT -> return "无词典结果"
+			SUCCESS -> "成功"
+			QUERY_STRING_TOO_LONG -> "要翻译的文本过长"
+			CAN_NOT_TRANSLATE -> "无法进行有效的翻译"
+			INVALID_LANGUAGE -> "不支持的语言类型"
+			INVALID_KEY -> "无效的key"
+			NO_RESULT -> "无词典结果"
+			else -> "你选中的是什么鬼?"
 		}
-		return "你选中的是什么鬼？"
 	}
-
 
 	/**
 	 * 获取不同语言的翻译内容
@@ -144,11 +141,9 @@ class TranslationBean {
 	 */
 	override fun toString(): String {
 		val string = StringBuilder()
-		if (SUCCESS != errorCode) {
-			string.append("错误代码：$errorCode\n$errorMessage")
-		} else {
-			if (translationResult != query)
-				string.append(if (isSentence(query)) "$translationResult\n" else "$query：$translationResult\n")
+		if (SUCCESS != errorCode) string.append("错误代码：$errorCode\n$errorMessage")
+		else {
+			string.append(if (isSentence(query)) "$translationResult\n" else "$query: $translationResult\n")
 			string.append("$phonetic\n").append(explains).append(webResult)
 		}
 		if (string.isBlank()) return "抱歉, 你选的内容: $query\n翻译不了..."

@@ -12,7 +12,6 @@ import java.io.InputStream;
  */
 public class StreamUtils {
 
-
     /**
      * 将输入流转换成字符串
      *

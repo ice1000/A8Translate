@@ -7,6 +7,7 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.ui.popup.JBPopupFactory
+import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.JBColor
 import org.a8sport.translate.bean.TranslationBean
 import org.a8sport.translate.net.HttpUtils
@@ -99,3 +100,5 @@ class TranslateAction : AnAction() {
 	}
 
 }
+
+val A8_ICON = IconLoader.getIcon("/icons/a8.png")

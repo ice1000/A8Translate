@@ -19,7 +19,7 @@ public abstract class TranslateCallBack<T> {
     }
 
     /** 数据类型 */
-    static Type getSuperclassTypeParameter(Class<?> subclass) {
+    private static Type getSuperclassTypeParameter(Class<?> subclass) {
         Type superclass = subclass.getGenericSuperclass();
         if (superclass instanceof Class) {
             throw new RuntimeException("Missing mType parameter.");
