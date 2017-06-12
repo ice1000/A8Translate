@@ -30,7 +30,7 @@ import java.awt.Color
 
 class TranslateAction : AnAction() {
 
-	private var mEditor: Editor? = null
+	private lateinit var editor: Editor
 	private var latestClickTime: Long = 0  // 上一次的点击时间
 
 	override fun actionPerformed(e: AnActionEvent) {
@@ -45,22 +45,18 @@ class TranslateAction : AnAction() {
 	 */
 	private fun performTranslation(e: AnActionEvent) {
 
-		/*
-		* 第一步 --> 选中单词
-    */
+		/* 第一步 --> 选中单词 */
 		// 获取动作编辑器
-		mEditor = e.getData(PlatformDataKeys.EDITOR) ?: return
+		editor = e.getData(PlatformDataKeys.EDITOR) ?: return
 
 		// 获取选择模式对象
-		val model = mEditor!!.selectionModel
+		val model = editor.selectionModel
 
 		// 选中文字
 		val selectedText = model.selectedText ?: return
 		if (selectedText.isBlank()) return
 
-		/*
-		* 第二步 ---> API查询
-		*/
+		/* 第二步 ---> API查询 */
 		HttpUtils.requestNetData(selectedText, object : TranslateCallBack<TranslationBean>() {
 			override fun onSuccess(result: TranslationBean) = showPopupWindow(result.toString())
 			override fun onFailure(message: String) = showPopupWindow(message)
@@ -77,21 +73,16 @@ class TranslateAction : AnAction() {
 	 */
 	private fun showPopupWindow(result: String) {
 		ApplicationManager.getApplication().invokeLater {
-			JBPopupFactory
-					.getInstance()
+			JBPopupFactory.getInstance()
 					.createHtmlTextBalloonBuilder(
 							result,
 							A8_ICON,
-							JBColor(
-									Color(186, 238, 186),
-									Color(73, 117, 73)
-							), null
+							JBColor(Color(186, 238, 186), Color(73, 117, 73)), null
 					)
 					.setFadeoutTime(5000)
 					.createBalloon()
-					.show(JBPopupFactory
-							.getInstance()
-							.guessBestPopupLocation(mEditor!!),
+					.show(JBPopupFactory.getInstance()
+							.guessBestPopupLocation(editor),
 							Balloon.Position.below)
 		}
 	}
