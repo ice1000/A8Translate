@@ -2,6 +2,8 @@
 
 一个无毒的 Android Studio/IntelliJ IDEA 翻译插件。
 
+原作者看起来并不准备接受我的 pull request ，因此我决定使用 Kotlin 重写。
+
 由于本插件面向中国用户，就不提供英文版README了。
 
 在编辑器中选中词语， **Alt+T**，然后就可以看到翻译结果了。

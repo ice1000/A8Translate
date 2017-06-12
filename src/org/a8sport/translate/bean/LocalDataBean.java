@@ -17,22 +17,21 @@ import java.util.Map;
  * @author ice1000
  */
 @SuppressWarnings("deprecation")
-@State(name = LocalData.PREFIX_NAME,
-        storages = {
-                @Storage(
-                        file = StoragePathMacros.APP_CONFIG + "/a8translate_cache.xml"
-                )})
+@State(name = LocalData.PREFIX_NAME, storages = {
+		@Storage(
+				file = StoragePathMacros.APP_CONFIG + "/a8translate_cache.xml"
+		)})
 public class LocalDataBean implements PersistentStateComponent<LocalDataBean> {
-    private Map<String, String> storage = new HashMap<>(30);
+	private Map<String, String> storage = new HashMap<>(30);
 
-    @Nullable
-    @Override
-    public LocalDataBean getState() {
-        return this;
-    }
+	@Nullable
+	@Override
+	public LocalDataBean getState() {
+		return this;
+	}
 
-    @Override
-    public void loadState(LocalDataBean localDataBean) {
-        XmlSerializerUtil.copyBean(localDataBean, this);
-    }
+	@Override
+	public void loadState(LocalDataBean localDataBean) {
+		XmlSerializerUtil.copyBean(localDataBean, this);
+	}
 }
