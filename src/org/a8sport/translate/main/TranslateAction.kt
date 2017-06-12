@@ -30,15 +30,11 @@ import java.awt.Color
  */
 
 class TranslateAction : AnAction() {
-
 	private lateinit var editor: Editor
-	private var latestClickTime: Long = 0  // 上一次的点击时间
+	private var latestClickTime = 0L  // 上一次的点击时间
 
 	override fun actionPerformed(e: AnActionEvent) {
-
-		if (!isFastClick(1000)) {
-			performTranslation(e)
-		}
+		if (!isFastClick(1000)) performTranslation(e)
 	}
 
 	/**
@@ -63,9 +59,7 @@ class TranslateAction : AnAction() {
 			override fun onFailure(message: String) = showPopupWindow(message)
 			override fun onError(message: String) = showPopupWindow(message)
 		})
-
 	}
-
 
 	/**
 	 * 第三步 --> 弹出对话框
@@ -75,16 +69,10 @@ class TranslateAction : AnAction() {
 	private fun showPopupWindow(result: String) {
 		ApplicationManager.getApplication().invokeLater {
 			JBPopupFactory.getInstance()
-					.createHtmlTextBalloonBuilder(
-							result,
-							A8_ICON,
-							JBColor(Color(186, 238, 186), Color(73, 117, 73)), null
-					)
-					.setFadeoutTime(5000)
+					.createHtmlTextBalloonBuilder(result, A8_ICON, JBColor(Color(186, 238, 186), Color(73, 117, 73)), null)
+					.setFadeoutTime(8000)
 					.createBalloon()
-					.show(JBPopupFactory.getInstance()
-							.guessBestPopupLocation(editor),
-							Balloon.Position.below)
+					.show(JBPopupFactory.getInstance().guessBestPopupLocation(editor), Balloon.Position.below)
 		}
 	}
 
@@ -92,10 +80,10 @@ class TranslateAction : AnAction() {
 	 * 屏蔽多次选中
 	 */
 	fun isFastClick(timeMillis: Long): Boolean {
-		val time = System.currentTimeMillis()
-		val timeD = time - latestClickTime
-		if (timeD in 1..(timeMillis - 1)) return true
-		latestClickTime = time
+		val begin = System.currentTimeMillis()
+		val end = begin - latestClickTime
+		if (end in 1..(timeMillis - 1)) return true
+		latestClickTime = begin
 		return false
 	}
 

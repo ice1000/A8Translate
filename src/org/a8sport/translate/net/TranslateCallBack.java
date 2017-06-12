@@ -12,18 +12,16 @@ import java.lang.reflect.Type;
 
 public abstract class TranslateCallBack<T> {
 
-    public Type mType;
+    public Type type;
 
     public TranslateCallBack() {
-        mType = getSuperclassTypeParameter(getClass());
+        type = getSuperclassTypeParameter(getClass());
     }
 
     /** 数据类型 */
     private static Type getSuperclassTypeParameter(Class<?> subclass) {
         Type superclass = subclass.getGenericSuperclass();
-        if (superclass instanceof Class) {
-            throw new RuntimeException("Missing mType parameter.");
-        }
+        if (superclass instanceof Class) throw new RuntimeException("Missing type parameter.");
         ParameterizedType parameterizedType = (ParameterizedType) superclass;
         return $Gson$Types.canonicalize(parameterizedType.getActualTypeArguments()[0]);
     }

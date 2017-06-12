@@ -25,7 +25,7 @@ object HttpUtils {
 	 */
 	fun requestNetData(queryWord: String, callBack: TranslateCallBack<TranslationBean>) {
 		LocalData.read(queryWord)?.let {
-			callBack.onSuccess(Gson().fromJson<TranslationBean>(it, callBack.mType))
+			callBack.onSuccess(Gson().fromJson<TranslationBean>(it, callBack.type))
 			return
 		}
 
@@ -44,7 +44,7 @@ object HttpUtils {
 				// 获取到Json字符串
 				val content = StreamUtils.getStringFromStream(ins)
 				if (content.isNotBlank()) {
-					callBack.onSuccess(Gson().fromJson<TranslationBean>(content, callBack.mType))
+					callBack.onSuccess(Gson().fromJson<TranslationBean>(content, callBack.type))
 					LocalData.store(queryWord, content)
 				} else callBack.onFailure(EMPTY)
 			} else callBack.onFailure("错误码：${conn.responseCode}\n错误信息：\n${conn.responseMessage}")
