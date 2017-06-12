@@ -66,17 +66,17 @@ class TranslationBean {
 	var translation: List<String>? = null
 	var web: List<WebBean>? = null
 
-	inner class BasicBean {
-		var usPhonetic: String? = null
-		var phonetic: String? = null
-		var ukPhonetic: String? = null
-		var explains: List<String>? = null
-	}
+	inner class BasicBean(
+			var usPhonetic: String?,
+			var phonetic: String?,
+			var ukPhonetic: String?,
+			var explains: List<String>?
+	)
 
-	inner class WebBean {
-		var key: String? = null
-		var value: List<String>? = null
-	}
+	inner class WebBean(
+			var key: String?,
+			var value: List<String>?
+	)
 
 
 	/**
@@ -103,10 +103,9 @@ class TranslationBean {
 			if (basic == null) return null
 
 			var phonetic: String? = null
-			val usPhonetic = basic!!.usPhonetic
-			val ukPhonetic = basic!!.ukPhonetic
+			val usPhonetic = basic?.usPhonetic
+			val ukPhonetic = basic?.ukPhonetic
 			if (usPhonetic == null && ukPhonetic == null) {
-
 				phonetic = "发音：[" + basic!!.phonetic + "]；"
 			} else {
 				if (usPhonetic != null) phonetic = "美式：[$usPhonetic]；"
@@ -122,16 +121,11 @@ class TranslationBean {
 	/**
 	 * 获取翻译
 	 */
-	private val explains: String?
+	private val explains: String
 		get() {
-			if (basic == null) return null
-			var result: StringBuilder? = null
-			val explains = basic!!.explains
-			if (explains!!.isNotEmpty()) {
-				result = StringBuilder()
-				for (explain in explains) result.append(explain).append("\n")
-			}
-			return if (result != null) result.toString() else null
+			val result = StringBuilder()
+			basic?.explains?.forEach { result.append(it).append("\n") }
+			return result.toString()
 		}
 
 	/**
@@ -168,26 +162,18 @@ class TranslationBean {
 				for (webBean in web!!) {
 					val key = webBean.key
 					result.append(key).append("：")
-
-					val value = webBean.value
-					for (i in value!!.indices) {
-						val keyword = value[i]
-						if (i < value.size - 1)
-							result.append(keyword).append("，")
-						else
-							result.append(keyword)
+					val value = webBean.value!!
+					for (i in value.indices) {
+						result.append(value[i])
+						if (i < value.size - 1) result.append("，")
 					}
-
 					result.append("\n")
 				}
 			}
-
-
-			return if (result != null) result.toString() else null
+			return result?.toString()
 		}
 
-	private val isSentence: Boolean
-		get() = query!!.trim { it <= ' ' }.contains(" ")
+	private val isSentence: Boolean get() = " " in (query?.trim { it <= ' ' } ?: "")
 
 	/**
 	 * 结果
