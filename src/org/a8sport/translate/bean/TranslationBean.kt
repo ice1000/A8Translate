@@ -118,7 +118,8 @@ class TranslationBean {
 	private val translationResult: String by lazy {
 		val result = StringBuilder()
 		translation?.forEachIndexed { i, v -> result.append(if (0 == i) "" else ", ").append(v) }
-		result.append(";").toString()
+		if (null != translation) result.append(";")
+		result.toString()
 	}
 
 	/**
@@ -141,7 +142,7 @@ class TranslationBean {
 	 */
 	override fun toString(): String {
 		val string = StringBuilder()
-		if (SUCCESS != errorCode) string.append("错误代码：$errorCode\n$errorMessage")
+		if (SUCCESS != errorCode) string.append("错误代码: $errorCode\n$errorMessage")
 		else {
 			string.append(if (isSentence(query)) "$translationResult\n" else "$query: $translationResult\n")
 			string.append("$phonetic\n").append(explains).append(webResult)
