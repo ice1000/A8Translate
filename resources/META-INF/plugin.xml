@@ -1,40 +1,36 @@
 <idea-plugin>
-  <id>org.ice1000.a8translate</id>
-  <name>A8Translate</name>
-  <version>1.5</version>
-  <vendor email="ice1000@kotliner.cn" url="http://ice1000.org/">千里冰封的博客</vendor>
+	<id>org.ice1000.a8translate</id>
+	<name>A8Translate</name>
+	<version>1.6</version>
+	<vendor email="ice1000kotlin@foxmail.com" url="http://ice1000.org/">千里冰封</vendor>
 
-  <description><![CDATA[
+	<description><![CDATA[
       一款功能强大的翻译插件。<br>
-      GitHub：https://github.com/PingerOne/A8Translate<br>
-      GitHub2：https://github.com/ice1000/A8Translate<br>
-      简书：http://www.jianshu.com/p/bf54eddfba6e<br>
+      原作: https://github.com/PingerOne/A8Translate<br>
+      GitHub: https://github.com/ice1000/A8Translate<br>
 
-      作者： wanpingping, ice1000
+      作者: wanpingping, ice1000
     ]]></description>
 
-  <change-notes><![CDATA[
-      1. 完善了翻译结果的本地保存。<br/>
-      2. 添加了图标。<br/>
-    ]]>
-  </change-notes>
+	<change-notes><![CDATA[
+      1. 使用 Kotlin 重写了 80% 的代码，减少了 null 的使用。
+]]></change-notes>
 
-  <idea-version since-build="145.0"/>
+	<idea-version since-build="145.0"/>
 
-  <depends>com.intellij.modules.lang</depends>
+	<depends>com.intellij.modules.lang</depends>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!--<applicationService-->
-    <!--serviceInterface="org.a8sport.translate.bean.LocalDataBean"-->
-    <!--serviceImplementation="org.a8sport.translate.bean.LocalDataBean"/>-->
-  </extensions>
+	<extensions defaultExtensionNs="com.intellij"/>
 
-  <actions>
-    <action id="A8Translate.TranslateAction" class="org.a8sport.translate.main.TranslateAction" text="A8Translate"
-            description="English translation into Chinese">
-      <add-to-group group-id="EditMenu" anchor="first"/>
-      <keyboard-shortcut keymap="$default" first-keystroke="alt t"/>
-    </action>
-  </actions>
+	<actions>
+		<action
+				id="A8Translate.TranslateAction"
+				class="org.a8sport.translate.main.TranslateAction"
+				text="A8Translate"
+				description="English translation into Chinese">
+			<add-to-group group-id="EditMenu" anchor="first"/>
+			<keyboard-shortcut keymap="$default" first-keystroke="alt t"/>
+		</action>
+	</actions>
 
 </idea-plugin>
