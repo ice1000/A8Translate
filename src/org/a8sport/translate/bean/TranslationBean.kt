@@ -98,102 +98,60 @@ class TranslationBean {
 	/**
 	 * 获取不同语言的翻译内容
 	 */
-	private val phonetic: String?
-		get() {
-			if (basic == null) return null
-
-			var phonetic: String? = null
-			val usPhonetic = basic?.usPhonetic
-			val ukPhonetic = basic?.ukPhonetic
-			if (usPhonetic == null && ukPhonetic == null) {
-				phonetic = "发音：[" + basic!!.phonetic + "]；"
-			} else {
-				if (usPhonetic != null) phonetic = "美式：[$usPhonetic]；"
-				if (ukPhonetic != null) {
-					if (phonetic == null) phonetic = ""
-					phonetic = phonetic + "英式：[" + ukPhonetic + "]；"
-				}
-			}
-			println(phonetic)
-			return phonetic
-		}
+	private val phonetic: String by lazy {
+		val phonetic = StringBuilder()
+		basic?.usPhonetic?.let { phonetic.append("美式: [$it];") }
+		basic?.ukPhonetic?.let { phonetic.append("英式: [$it];") }
+		basic?.phonetic?.let { phonetic.append("发音: [$it];") }
+		phonetic.toString()
+	}
 
 	/**
 	 * 获取翻译
 	 */
-	private val explains: String
-		get() {
-			val result = StringBuilder()
-			basic?.explains?.forEach { result.append(it).append("\n") }
-			return result.toString()
-		}
+	private val explains: String by lazy {
+		val result = StringBuilder()
+		basic?.explains?.forEach { result.append(it).append("\n") }
+		result.toString()
+	}
 
 	/**
 	 * 获取直接的翻译结果
 	 */
-	private val translationResult: String?
-		get() {
-			if (translation == null) return null
-			var result: StringBuilder? = null
-			if (translation!!.isNotEmpty()) {
-				result = StringBuilder()
-				for (i in translation!!.indices) {
-					val keyword = translation!![i]
-					if (i < translation!!.size - 1)
-						result.append(keyword).append("，")
-					else
-						result.append(keyword).append("；")
-				}
-			}
-			return if (result != null) result.toString() else null
-		}
+	private val translationResult: String by lazy {
+		val result = StringBuilder()
+		translation?.forEachIndexed { i, v -> result.append(if (0 == i) "" else ", ").append(v) }
+		result.append(";").toString()
+	}
 
 	/**
 	 * 获取网络翻译结果
 	 */
-	private val webResult: String?
-		get() {
-			if (web == null) {
-				return null
-			}
-			var result: StringBuilder? = null
-			if (web!!.isNotEmpty()) {
-				result = StringBuilder()
-				for (webBean in web!!) {
-					val key = webBean.key
-					result.append(key).append("：")
-					val value = webBean.value!!
-					for (i in value.indices) {
-						result.append(value[i])
-						if (i < value.size - 1) result.append("，")
-					}
-					result.append("\n")
-				}
-			}
-			return result?.toString()
+	private val webResult: String by lazy {
+		val result = StringBuilder()
+		if (null != web) result.append("网络释义: \n")
+		web?.forEach {
+			result.append(it.key).append(": ")
+			it.value?.forEachIndexed { i, v -> result.append(if (0 == i) "" else ", ").append(v) }
 		}
+		result.toString()
+	}
 
-	private val isSentence: Boolean get() = " " in (query?.trim { it <= ' ' } ?: "")
+	fun isSentence(query: String?) = null != query && " " in query.trim { it <= ' ' }
 
 	/**
 	 * 结果
 	 */
 	override fun toString(): String {
 		val string = StringBuilder()
-		if (errorCode != SUCCESS) {
+		if (SUCCESS != errorCode) {
 			string.append("错误代码：$errorCode\n$errorMessage")
 		} else {
-			var translation = translationResult
-			if (translation != null) {
-				translation = translation.substring(0, translation.length - 1)
-				if (translation != query)
-					string.append(if (isSentence) "${translationResult!!}\n" else "$query：$translationResult\n")
-			}
-			if (null != phonetic) string.append("${phonetic!!}\n")
-			if (explains != null) string.append(explains)
-			if (webResult != null) string.append("网络释义：\n$webResult")
+			if (translationResult != query)
+				string.append(if (isSentence(query)) "$translationResult\n" else "$query：$translationResult\n")
+			string.append("$phonetic\n").append(explains).append(webResult)
 		}
-		if (string.isBlank()) return "你选的内容：$query\n\n抱歉,翻译不了..."
+		if (string.isBlank()) return "抱歉, 你选的内容: $query\n翻译不了..."
 		return string.toString()
 	}
 }
