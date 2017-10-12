@@ -1,6 +1,8 @@
 # A8Translate
 
-一个无毒的 Android Studio/IntelliJ IDEA 翻译插件。
+[![JetBrains plugins](https://img.shields.io/jetbrains/plugin/d/9630-a8translate.svg)](https://plugins.jetbrains.com/plugin/9630-a8translate)
+
+一个无毒的 JetBrains IDE 翻译插件。
 
 原作者看起来并不准备接受我的 pull request (可能是 GitHub 僵尸用户)，因此我决定使用 Kotlin 重写。
 
