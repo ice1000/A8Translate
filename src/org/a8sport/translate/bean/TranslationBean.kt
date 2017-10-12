@@ -135,7 +135,7 @@ class TranslationBean {
 		result.toString()
 	}
 
-	fun isSentence(query: String?) = null != query && " " in query.trim { it <= ' ' }
+	private fun isSentence(query: String?) = null != query && " " in query.trim { it <= ' ' }
 
 	/**
 	 * 结果

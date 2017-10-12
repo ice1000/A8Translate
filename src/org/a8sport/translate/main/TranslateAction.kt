@@ -41,7 +41,6 @@ class TranslateAction : AnAction() {
 	 * 执行翻译
 	 */
 	private fun performTranslation(e: AnActionEvent) {
-
 		/* 第一步 --> 选中单词 */
 		// 获取动作编辑器
 		editor = e.getData(PlatformDataKeys.EDITOR) ?: return
@@ -79,7 +78,7 @@ class TranslateAction : AnAction() {
 	/**
 	 * 屏蔽多次选中
 	 */
-	fun isFastClick(timeMillis: Long): Boolean {
+	private fun isFastClick(timeMillis: Long): Boolean {
 		val begin = System.currentTimeMillis()
 		val end = begin - latestClickTime
 		if (end in 1..(timeMillis - 1)) return true
