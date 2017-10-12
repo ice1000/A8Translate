@@ -147,7 +147,9 @@ class TranslationBean {
 			string.append(if (isSentence(query)) "$translationResult\n" else "$query: $translationResult\n")
 			string.append("$phonetic\n").append(explains).append(webResult)
 		}
-		if (string.isBlank()) return "抱歉, 你选的内容: $query\n翻译不了..."
+		println(translationResult)
+		println(query)
+		if (translationResult == "$query;" || string.isBlank()) return "抱歉, 你选的内容: $query\n翻译不了..."
 		return string.toString()
 	}
 }
