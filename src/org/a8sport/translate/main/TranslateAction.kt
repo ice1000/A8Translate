@@ -10,8 +10,8 @@ import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.JBColor
 import org.a8sport.translate.bean.TranslationBean
-import org.a8sport.translate.net.HttpUtils
 import org.a8sport.translate.net.TranslateCallBack
+import org.a8sport.translate.net.requestNetData
 import java.awt.Color
 
 /**
@@ -53,7 +53,7 @@ class TranslateAction : AnAction() {
 		if (selectedText.isBlank()) return
 
 		/* 第二步 ---> API查询 */
-		HttpUtils.requestNetData(selectedText, object : TranslateCallBack<TranslationBean>() {
+		requestNetData(selectedText, object : TranslateCallBack<TranslationBean>() {
 			override fun onSuccess(result: TranslationBean) = showPopupWindow(result.toString())
 			override fun onFailure(message: String) = showPopupWindow(message)
 			override fun onError(message: String) = showPopupWindow(message)
