@@ -1,7 +1,7 @@
 <idea-plugin>
 	<id>org.ice1000.a8translate</id>
 	<name>A8Translate</name>
-	<version>1.6</version>
+	<version>1.6-2</version>
 	<vendor email="ice1000kotlin@foxmail.com" url="http://ice1000.org/">千里冰封</vendor>
 
 	<description><![CDATA[
