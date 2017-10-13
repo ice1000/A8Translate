@@ -1,6 +1,7 @@
 # A8Translate
 
 [![JetBrains plugins](https://img.shields.io/jetbrains/plugin/d/9630-a8translate.svg)](https://plugins.jetbrains.com/plugin/9630-a8translate)
+[![JetBrains plugins](https://img.shields.io/jetbrains/plugin/v/9630-a8translate.svg)](https://plugins.jetbrains.com/plugin/9630-a8translate)
 
 一个无毒的 JetBrains IDE 翻译插件。
 
