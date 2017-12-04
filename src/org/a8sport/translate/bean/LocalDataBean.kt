@@ -13,7 +13,7 @@ import org.a8sport.translate.main.PREFIX_NAME
 
  * @author ice1000
  */
-@State(name = PREFIX_NAME, storages = arrayOf(Storage(file = StoragePathMacros.APP_CONFIG + "/a8translate_cache.xml")))
+@State(name = PREFIX_NAME, storages = [(Storage(file = StoragePathMacros.APP_CONFIG + "/a8translate_cache.xml"))])
 class LocalDataBean : PersistentStateComponent<LocalDataBean> {
 	private val storage = HashMap<String, String>(30)
 
