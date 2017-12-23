@@ -3,6 +3,7 @@
 package org.a8sport.translate.net
 
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import org.a8sport.translate.bean.EMPTY
 import org.a8sport.translate.bean.TranslationBean
 import org.a8sport.translate.main.LocalData
@@ -26,12 +27,12 @@ private const val BASE_URL = "http://fanyi.youdao.com/openapi.do?keyfrom=Skykai5
  * @author ice1000
  */
 fun requestNetData(queryWord: String, callBack: TranslateCallBack<TranslationBean>) {
-	LocalData.read(queryWord)?.let {
-		callBack.onSuccess(Gson().fromJson<TranslationBean>(it, callBack.type))
-		return
-	}
-
 	try {
+		LocalData.read(queryWord)?.let {
+			callBack.onSuccess(Gson().fromJson<TranslationBean>(it, callBack.type))
+			return
+		}
+
 		val url = URL("$BASE_URL$queryWord")
 		val conn = url.openConnection() as HttpURLConnection
 
@@ -51,6 +52,8 @@ fun requestNetData(queryWord: String, callBack: TranslateCallBack<TranslationBea
 			} else callBack.onFailure(EMPTY)
 		} else callBack.onFailure("错误码：${conn.responseCode}\n错误信息：\n${conn.responseMessage}")
 	} catch (e: IOException) {
-		callBack.onFailure("无法访问:\n" + e.message)
+		callBack.onFailure("无法访问:\n${e.message}")
+	} catch (e: JsonSyntaxException) {
+		callBack.onFailure("请求格式错误:\n${e.message}")
 	}
 }
