@@ -3,7 +3,6 @@ package org.a8sport.translate.bean
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import com.intellij.openapi.components.StoragePathMacros
 import com.intellij.util.containers.HashMap
 import com.intellij.util.xmlb.XmlSerializerUtil
 import org.a8sport.translate.main.PREFIX_NAME
@@ -13,7 +12,8 @@ import org.a8sport.translate.main.PREFIX_NAME
 
  * @author ice1000
  */
-@State(name = PREFIX_NAME, storages = [(Storage(file = StoragePathMacros.APP_CONFIG + "/a8translate_cache.xml"))])
+@State(name = PREFIX_NAME)
+@Storage("/a8translate_cache.xml")
 class LocalDataBean : PersistentStateComponent<LocalDataBean> {
 	private val storage = HashMap<String, String>(30)
 
