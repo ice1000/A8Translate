@@ -30,34 +30,33 @@ import java.awt.Color
  */
 
 class TranslateAction : AnAction() {
+	companion object {
+		private val icon = IconLoader.getIcon("/icons/a8.png")
+	}
+
 	private lateinit var editor: Editor
 	private var latestClickTime = 0L  // 上一次的点击时间
 
 	override fun actionPerformed(e: AnActionEvent) {
-		if (!isFastClick(1000)) performTranslation(e)
-	}
+		if (!isFastClick(1000)) {
+			/* 第一步 --> 选中单词 */
+			// 获取动作编辑器
+			editor = e.getData(PlatformDataKeys.EDITOR) ?: return
 
-	/**
-	 * 执行翻译
-	 */
-	private fun performTranslation(e: AnActionEvent) {
-		/* 第一步 --> 选中单词 */
-		// 获取动作编辑器
-		editor = e.getData(PlatformDataKeys.EDITOR) ?: return
+			// 获取选择模式对象
+			val model = editor.selectionModel
 
-		// 获取选择模式对象
-		val model = editor.selectionModel
+			// 选中文字
+			val selectedText = model.selectedText ?: return
+			if (selectedText.isBlank()) return
 
-		// 选中文字
-		val selectedText = model.selectedText ?: return
-		if (selectedText.isBlank()) return
-
-		/* 第二步 ---> API查询 */
-		requestNetData(selectedText, object : TranslateCallBack<TranslationBean>() {
-			override fun onSuccess(result: TranslationBean) = showPopupWindow(result.toString())
-			override fun onFailure(message: String) = showPopupWindow(message)
-			override fun onError(message: String) = showPopupWindow(message)
-		})
+			/* 第二步 ---> API查询 */
+			requestNetData(selectedText, object : TranslateCallBack<TranslationBean>() {
+				override fun onSuccess(result: TranslationBean) = showPopupWindow(result.toString())
+				override fun onFailure(message: String) = showPopupWindow(message)
+				override fun onError(message: String) = showPopupWindow(message)
+			})
+		}
 	}
 
 	/**
@@ -68,8 +67,9 @@ class TranslateAction : AnAction() {
 	private fun showPopupWindow(result: String) {
 		ApplicationManager.getApplication().invokeLater {
 			JBPopupFactory.getInstance()
-					.createHtmlTextBalloonBuilder(result, A8_ICON, JBColor(Color(186, 238, 186), Color(73, 117, 73)), null)
-					.setFadeoutTime(8000)
+					.createHtmlTextBalloonBuilder(result, icon, JBColor(Color(186, 238, 186), Color(73, 117, 73)), null)
+					.setFadeoutTime(15000)
+					.setHideOnAction(true)
 					.createBalloon()
 					.show(JBPopupFactory.getInstance().guessBestPopupLocation(editor), Balloon.Position.below)
 		}
@@ -85,7 +85,5 @@ class TranslateAction : AnAction() {
 		latestClickTime = begin
 		return false
 	}
-
 }
 
-val A8_ICON = IconLoader.getIcon("/icons/a8.png")

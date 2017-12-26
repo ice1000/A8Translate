@@ -131,11 +131,12 @@ class TranslationBean {
 		web?.forEach {
 			result.append(it.key).append(": ")
 			it.value?.forEachIndexed { i, v -> result.append(if (0 == i) "" else ", ").append(v) }
+			result.append('\n')
 		}
 		result.toString()
 	}
 
-	private fun isSentence(query: String?) = null != query && " " in query.trim { it <= ' ' }
+	private fun isSentence(query: String?) = null != query && ' ' in query.trim { it <= ' ' }
 
 	/**
 	 * 结果
