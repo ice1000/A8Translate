@@ -16,7 +16,7 @@
       1. <code>URLEncode</code>处理参数 (#4)
       2. 忽略一些符号 (#13)
       3. 添加到右键菜单 (#12)
-      4. 字数补丁字数补丁字数补丁字数补丁字数补丁
+      4. Json 解析出错时显示 Json (#9)
 ]]></change-notes>
 
 	<idea-version since-build="145.0"/>

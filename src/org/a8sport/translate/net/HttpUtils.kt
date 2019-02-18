@@ -31,12 +31,16 @@ private const val BASE_URL = "http://fanyi.youdao.com/openapi.do?keyfrom=Skykai5
 fun requestNetData(queryWord: String, callBack: TranslateCallBack<TranslationBean>) {
 	try {
 		LocalData.read(queryWord)?.let {
-			callBack.onSuccess(Gson().fromJson<TranslationBean>(it, callBack.type))
+			try {
+				callBack.onSuccess(Gson().fromJson<TranslationBean>(it, callBack.type))
+			} catch (e: JsonSyntaxException) {
+				callBack.onFailure("返回的 Json 解析不了，你看看是不是报了什么奇怪的错，去 GitHub 跟我说下：\n$it")
+			}
 			return
 		}
 
 		@Language("RegExp")
-        val url = URL("$BASE_URL${URLEncoder.encode(queryWord.replace(Regex("[*+\\- \r]+"), " "), "UTF-8")}")
+		val url = URL("$BASE_URL${URLEncoder.encode(queryWord.replace(Regex("[*+\\- \r]+"), " "), "UTF-8")}")
 		val conn = url.openConnection() as HttpURLConnection
 
 		conn.connectTimeout = 3000
@@ -55,8 +59,6 @@ fun requestNetData(queryWord: String, callBack: TranslateCallBack<TranslationBea
 			} else callBack.onFailure(EMPTY)
 		} else callBack.onFailure("错误码：${conn.responseCode}\n错误信息：\n${conn.responseMessage}")
 	} catch (e: IOException) {
-		callBack.onFailure("无法访问:\n${e.message}")
-	} catch (e: JsonSyntaxException) {
-		callBack.onFailure("请求格式错误:\n${e.message}")
+		callBack.onFailure("无法访问：\n${e.message}")
 	}
 }
