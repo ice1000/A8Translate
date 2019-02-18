@@ -7,9 +7,11 @@ import com.google.gson.JsonSyntaxException
 import org.a8sport.translate.bean.EMPTY
 import org.a8sport.translate.bean.TranslationBean
 import org.a8sport.translate.main.LocalData
+import org.intellij.lang.annotations.Language
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLEncoder
 
 /**
  * Created by Pinger on 2016/12/10.
@@ -33,7 +35,8 @@ fun requestNetData(queryWord: String, callBack: TranslateCallBack<TranslationBea
 			return
 		}
 
-		val url = URL("$BASE_URL$queryWord")
+		@Language("RegExp")
+        val url = URL("$BASE_URL${URLEncoder.encode(queryWord.replace(Regex("[*+\\- \r]+"), " "), "UTF-8")}")
 		val conn = url.openConnection() as HttpURLConnection
 
 		conn.connectTimeout = 3000

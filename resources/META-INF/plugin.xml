@@ -1,8 +1,8 @@
 <idea-plugin>
 	<id>org.ice1000.a8translate</id>
 	<name>A8Translate</name>
-	<version>1.7</version>
-	<vendor email="ice1000kotlin@foxmail.com" url="http://ice1000.org/">千里冰封</vendor>
+	<version>1.8</version>
+	<vendor email="ice1000kotlin@foxmail.com" url="https://ice1000.org/">千里冰封</vendor>
 
 	<description><![CDATA[
       一款功能强大的翻译插件。<br>
@@ -13,7 +13,10 @@
     ]]></description>
 
 	<change-notes><![CDATA[
-      1. 优化了错误处理（修复了一个 bug） #1
+      1. <code>URLEncode</code>处理参数 (#4)
+      2. 忽略一些符号 (#13)
+      3. 添加到右键菜单 (#12)
+      4. 字数补丁字数补丁字数补丁字数补丁字数补丁
 ]]></change-notes>
 
 	<idea-version since-build="145.0"/>
@@ -29,6 +32,7 @@
 				text="A8Translate"
 				description="English translation into Chinese">
 			<add-to-group group-id="EditMenu" anchor="first"/>
+			<add-to-group group-id="EditorPopupMenu.GoTo" anchor="last"/>
 			<keyboard-shortcut keymap="$default" first-keystroke="alt t"/>
 		</action>
 	</actions>
