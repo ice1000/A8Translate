@@ -16,11 +16,11 @@ const val PREFIX_NAME = "A8Translate"
 
 object LocalData {
 	private val p = Properties()
-	private val f = File(System.getProperty("user.home") + "/a8temp.properties")
+	// private val f = File(System.getProperty("user.home") + "/a8temp.properties")
 
 	init {
-		if (!f.exists()) f.createNewFile()
-		p.load(FileReader(f))
+		// if (!f.exists()) f.createNewFile()
+		// p.load(FileReader(f))
 	}
 
 	fun store(@NonNls key: String, @NonNls value: String) {
@@ -33,7 +33,7 @@ object LocalData {
 		save()
 	}
 
-	private fun save() = p.store(FileWriter(f), "Created by a8translate")
+	private fun save() = Unit // p.store(FileWriter(f), "Created by a8translate")
 
 	fun read(@NonNls key: String): String? = p.getProperty(StringUtils.uncapitalize(key))
 }
