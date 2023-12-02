@@ -1,3 +1,5 @@
+学业繁忙，写不动插件了。请大家用[这个](https://github.com/cuishijie1991/A8TranslatePlus)。
+
 # A8Translate
 
 [![JetBrains plugins](https://img.shields.io/jetbrains/plugin/d/9630-a8translate.svg)](https://plugins.jetbrains.com/plugin/9630-a8translate)
